@@ -37,3 +37,7 @@ find the different maps
 
 Tide Gauge Map
 http://orf.maps.arcgis.com/home/webmap/viewer.html?webmap=474e20141d864093a4a0f9cf0bbb55ba
+
+APIs
+---
+https://developers.arcgis.com/javascript/jshelp/whats_new.html
