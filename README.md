@@ -7,7 +7,8 @@ Norfolk Flood Maps Data Layers
 ---
 ArcGIS 10.0
 http://gisapp1.norfolk.gov/ArcGIS/rest/services
-http://gisapp1.norfolk.gov/ArcGIS/rest/services/Norfolk_Tide_Gauge_Map/
+http://giswebapp1/ArcGIS/rest/services/Norfolk_Tide_Gauge_Map/MapServer
+
 
 These maps are precalculated from collected city data over a three year span.
 
@@ -38,7 +39,7 @@ find the different maps
 
 
 Tide Gauge Map
-http://orf.maps.arcgis.com/home/webmap/viewer.html?webmap=474e20141d864093a4a0f9cf0bbb55ba
+http://bit.ly/1mhIR2B
 
 APIs
 ---
