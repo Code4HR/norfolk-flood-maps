@@ -44,8 +44,8 @@ http://bit.ly/1mhIR2B
 APIs
 ---
 ArcGis JS - https://developers.arcgis.com/javascript/jshelp/whats_new.html
-Leaflet/Esri - http://flood.firetree.net/?ll=43.3251,-101.6015&z=13&m=7
-
+Leaflet/Esri - https://github.com/esri/esri-leaflet
 
 Flood Map Examples
 ---
+http://flood.firetree.net/?ll=43.3251,-101.6015&z=13&m=7
