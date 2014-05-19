@@ -29,7 +29,7 @@
     <div class="demo-controls">
       <h1 class="title contract" id="title" onclick="showControls();">Dynamic Map Service</h1>
       <div class="control-container" id="controlContainer">
-        <p id="elevation">Flooding at 3ft tide elevation </div>
+        <p id="elevation">Flooding at 10 ft tide elevation </div>
     </div>
     <a href="https://github.com/c4hrva/norfolk-flood-maps/"><img style="z-index: 1000; position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png" alt="Fork me on GitHub"></a>
     <script>
@@ -43,7 +43,7 @@
 L.esri.dynamicMapLayer("http://gisapp1.norfolk.gov/ArcGIS/rest/services/Norfolk_Tide_Gauge_Map/MapServer/",
       {
         opacity : 1,
-        layers: [0,1,25]
+        layers: [0,1,39]
       });
 
       map.addLayer(dynLayer);
