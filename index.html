@@ -31,7 +31,7 @@
         imageParameters.layerOption = ImageParameters.LAYER_OPTION_SHOW;
         //can also be: LAYER_OPTION_EXCLUDE, LAYER_OPTION_HIDE, LAYER_OPTION_INCLUDE
 
-        layer = new ArcGISDynamicMapServiceLayer("http://gisapp1.norfolk.gov/ArcGIS/rest/services/Norfolk_Tide_Gauge_Map/MapServer", {
+        layer = new ArcGISDynamicMapServiceLayer("http://gisapp1.norfolk.gov/ArcGIS/rest/services/Norfolk_Tide_Gauge_Map/MapServer/", {
           "imageParameters": imageParameters
         });
         map.addLayer(layer);

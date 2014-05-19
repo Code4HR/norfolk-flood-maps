@@ -29,13 +29,12 @@
     <div class="demo-controls">
       <h1 class="title contract" id="title" onclick="showControls();">Dynamic Map Service</h1>
       <div class="control-container" id="controlContainer">
-        <p>This demo shows using Dynamic Map Services. Click anywhere on the demo to discover features and attributes.</p>
-      </div>
+        <p>Norfolk Flood Maps</div>
     </div>
     <a href="https://github.com/esri/esri-leaflet"><img style="z-index: 1000; position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png" alt="Fork me on GitHub"></a>
     <script>
       //Initializing the map to start at the east coast
-      var map = L.map('map').setView([36.55, 76.12], 12);
+      var map = L.map('map').setView([36.86, -76.3], 12);
       //Add Oceans Basemaps
       L.esri.basemapLayer("Streets").addTo(map);
 
@@ -67,7 +66,7 @@ L.esri.dynamicMapLayer("http://gisapp1.norfolk.gov/ArcGIS/rest/services/Norfolk_
       //find me
       function onLocationFound(e) {
       var radius = e.accuracy / 2;
-
+      console.log(e.latlng);
       L.marker(e.latlng).addTo(map)
         .bindPopup("You are within " + radius + " meters from this point").openPopup();
 
@@ -81,7 +80,7 @@ L.esri.dynamicMapLayer("http://gisapp1.norfolk.gov/ArcGIS/rest/services/Norfolk_
       map.on('locationfound', onLocationFound);
       map.on('locationerror', onLocationError);
 
-      map.locate({setView: true, maxZoom: 10});
+      map.locate({setView: true, maxZoom: 12});
 
      </script>
   </body>
