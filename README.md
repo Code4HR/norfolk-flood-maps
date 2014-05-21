@@ -19,11 +19,13 @@ some information on layers
 - Should be accessible by any map layer on the web ex (leaflet, esri-js,google maps)
 - see example in repo(coming)  
 
-High tide prediction api
-http://www.nws.noaa.gov/mdl/etsurge/index.php?page=stn&region=me&type=both&stn=vahamp
 
-Time relation
-http://tidesandcurrents.noaa.gov/waterlevels.html?id=8638610
+JSON Return
+http://tidesandcurrents.noaa.gov/waterlevels.html?id=8638610&units=standard&bdate=20140520&edate=20140521&timezone=GMT&datum=MLLW&interval=6&action=data
+
+High tide prediction in relation to time
+- http://tidesandcurrents.noaa.gov/waterlevels.html?id=8638610
+- http://www.nws.noaa.gov/mdl/etsurge/index.php?page=stn&region=me&type=both&stn=vahamp
 
 
 Map Samples
