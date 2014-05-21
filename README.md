@@ -20,11 +20,23 @@ some information on layers
 - see example in repo(coming)  
 
 
-JSON Return
-http://tidesandcurrents.noaa.gov/waterlevels.html?id=8638610&units=standard&bdate=20140520&edate=20140521&timezone=GMT&datum=MLLW&interval=6&action=data
+
+http://tidesandcurrents.noaa.gov/api/datagetter?product=predictions&application=NOS.COOPS.TAC.WL&begin_date=20140516&end_date=20140517&datum=MLLW&station=8638610&time_zone=GMT&units=english&interval=&format=json
+
+```
+predictions: [
+{
+t: "2014-05-16 00:00", // time
+v: "1.946" //predicted height in feet
+},
+...
+]
+```
+
 
 High tide prediction in relation to time
 - http://tidesandcurrents.noaa.gov/waterlevels.html?id=8638610
+- http://tidesandcurrents.noaa.gov/api/
 - http://www.nws.noaa.gov/mdl/etsurge/index.php?page=stn&region=me&type=both&stn=vahamp
 
 
