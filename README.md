@@ -32,7 +32,7 @@ v: "1.946" //predicted height in feet
 ...
 ]
 ```
-![alt tag](apiparams.png)
+![alt tag](docs/apiparams.png)
 High tide prediction in relation to time
 - http://tidesandcurrents.noaa.gov/waterlevels.html?id=8638610
 - http://tidesandcurrents.noaa.gov/api/
