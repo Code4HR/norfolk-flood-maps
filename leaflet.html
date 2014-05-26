@@ -10,19 +10,17 @@
 
     <!-- Load a small bit of CSS and Javascript specifcally for these demos -->
     <link rel="stylesheet" href="esri-leaflet/examples/demo.css" />
+    <link rel="stylesheet" href="main.css" />
     <script src="esri-leaflet/examples/demo.js"></script>
 
     <!-- Load Esri Leaflet -->
     <script src="esri-leaflet/examples/lib/esri-leaflet/esri-leaflet.js"></script>
 
     <!-- Make the map fill the entire page -->
-    <style>
-      html, body, #map {
-        width: 100%;
-        height: 100%;
-        margin: 0;
-      }
-    </style>
+    <!--Jquery Touch-->
+    <script src="bower_components/jquery/dist/jquery.min.js"</script>
+    <script src="bower_components/leaflet-slider/dist/leaflet.SliderControl.min.js"</script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.2/jquery.ui.touch-punch.min.js"></script>
   </head>
   <body>
     <div id="map"> </div>
@@ -32,6 +30,10 @@
         <p id="elevation">Flooding at 10 ft tide elevation </div>
     </div>
     <a href="https://github.com/c4hrva/norfolk-flood-maps/"><img style="z-index: 1000; position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png" alt="Fork me on GitHub"></a>
+    <center>
+      <label id="size">39</label>
+      <input id="slide" type="range" min="19" max="39" step="1" value="39" onchange="updateOpacity(this.value)">
+    </center>
     <script>
       //Initializing the map to start at the east coast
       var map = L.map('map').setView([36.86, -76.3], 12);
@@ -63,6 +65,11 @@ L.esri.dynamicMapLayer("http://gisapp1.norfolk.gov/ArcGIS/rest/services/Norfolk_
           }
         });
       });
+      //Slider
+      function updateOpacity(value) {
+      //mapquest.setOpacity(value);
+      console.log(value);
+      }
       //find me
       function onLocationFound(e) {
       var radius = e.accuracy / 2;
