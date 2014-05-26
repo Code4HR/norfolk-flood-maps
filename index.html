@@ -31,7 +31,7 @@
     </div>
     <a href="https://github.com/c4hrva/norfolk-flood-maps/"><img style="z-index: 1000; position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png" alt="Fork me on GitHub"></a>
     <center>
-      <label id="size">39</label>
+      <label id="size">10 feet</label>
       <input id="slide" type="range" min="19" max="39" step="1" value="39" onchange="updateOpacity(this.value)">
     </center>
     <script>
@@ -70,16 +70,15 @@ L.esri.dynamicMapLayer("http://gisapp1.norfolk.gov/ArcGIS/rest/services/Norfolk_
       //mapquest.setOpacity(value);
       console.log(value);
       map.removeLayer(dynLayer);
-      dynLayer = //L.esri.dynamicMapLayer("http://sampleserver6.arcgisonline.com/arcgis/rest/services/Hurricanes/MapServer/",
-      L.esri.dynamicMapLayer("http://gisapp1.norfolk.gov/ArcGIS/rest/services/Norfolk_Tide_Gauge_Map/MapServer/",
+      dynLayer = L.esri.dynamicMapLayer("http://gisapp1.norfolk.gov/ArcGIS/rest/services/Norfolk_Tide_Gauge_Map/MapServer/",
       {
         opacity : .5,
         layers: [0,1,value]
       });
 
       map.addLayer(dynLayer);
-
-      $("#size").text(value);
+      console.log(map);
+      $("#size").text((value-19)/2+" feet");
       }
       //find me
       function onLocationFound(e) {
