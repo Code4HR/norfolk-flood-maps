@@ -1,77 +1,105 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <!--The viewport meta tag is used to improve the presentation and behavior of the samples on iOS devices-->
-  <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no">
-  <title>Explicitly Create Map Service Layer List</title>
+  <head>
+    <title>Norfolk Flood Map</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-  <link rel="stylesheet" href="http://js.arcgis.com/3.9/js/dojo/dijit/themes/claro/claro.css">
-  <link rel="stylesheet" href="http://js.arcgis.com/3.9/js/esri/css/esri.css">
-  <script src="http://js.arcgis.com/3.9/"></script>
-  <script>
-    var map;
-    require([
-        "esri/map",
-        "esri/layers/ArcGISDynamicMapServiceLayer",
-        "esri/layers/ImageParameters",
-        "dojo/dom",
-        "dojo/on",
-        "dojo/query",
-        "dojo/domReady!"
-      ],
-      function(Map, ArcGISDynamicMapServiceLayer, ImageParameters, dom, on, query) {
-        var layer, visibleLayerIds = [];
+    <!-- Load Leaflet from their CDN -->
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
 
-        map = new Map("map");
+    <!-- Load a small bit of CSS and Javascript specifcally for these demos -->
+    <link rel="stylesheet" href="esri-leaflet/examples/demo.css" />
+    <link rel="stylesheet" href="main.css" />
+    <script src="esri-leaflet/examples/demo.js"></script>
 
-        //Use the ImageParameters to set the visibleLayerIds layers in the map service during ArcGISDynamicMapServiceLayer construction.
-        var imageParameters = new ImageParameters();
-        imageParameters.layerIds = [12];
-        imageParameters.layerOption = ImageParameters.LAYER_OPTION_SHOW;
-        //can also be: LAYER_OPTION_EXCLUDE, LAYER_OPTION_HIDE, LAYER_OPTION_INCLUDE
+    <!-- Load Esri Leaflet -->
+    <script src="esri-leaflet/examples/lib/esri-leaflet/esri-leaflet.js"></script>
 
-        layer = new ArcGISDynamicMapServiceLayer("http://gisapp1.norfolk.gov/ArcGIS/rest/services/Norfolk_Tide_Gauge_Map/MapServer/", {
-          "imageParameters": imageParameters
-        });
-        map.addLayer(layer);
+    <!-- Make the map fill the entire page -->
+    <!--Jquery Touch-->
+    <script src="bower_components/jquery/dist/jquery.min.js"</script>
+    <script src="bower_components/leaflet-slider/dist/leaflet.SliderControl.min.js"</script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.2/jquery.ui.touch-punch.min.js"></script>
+  </head>
+  <body>
+    <div id="map"> </div>
+    <div class="demo-controls">
+      <h1 class="title contract" id="title" onclick="showControls();">Dynamic Map Service</h1>
+      <div class="control-container" id="controlContainer">
+        <p id="elevation">Flooding at 10 ft tide elevation </div>
+    </div>
+    <a href="https://github.com/c4hrva/norfolk-flood-maps/"><img style="z-index: 1000; position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png" alt="Fork me on GitHub"></a>
+    <center>
+      <label id="size">39</label>
+      <input id="slide" type="range" min="19" max="39" step="1" value="39" onchange="updateOpacity(this.value)">
+    </center>
+    <script>
+      //Initializing the map to start at the east coast
+      var map = L.map('map').setView([36.86, -76.3], 12);
+      //Add Oceans Basemaps
+      L.esri.basemapLayer("Streets").addTo(map);
 
-        on(dom.byId("layer0CheckBox"), "change", updateLayerVisibility);
-        on(dom.byId("layer1CheckBox"), "change", updateLayerVisibility);
-
-        function updateLayerVisibility() {
-          var inputs = query(".list_item");
-          var inputCount = inputs.length;
-          //in this application layer 12 is always on.
-          visibleLayerIds = [12];
-
-          for (var i = 0; i < inputCount; i++) {
-            if (inputs[i].checked) {
-              visibleLayerIds.push(inputs[i].value);
-            }
-          }
-
-          if (visibleLayerIds.length === 0) {
-            visibleLayerIds.push(-1);
-          }
-
-          layer.setVisibleLayers(visibleLayerIds);
-        }
+      //ArcGIS Server Dynamic Map Service, Historic Hurricane Tracks
+      dynLayer = //L.esri.dynamicMapLayer("http://sampleserver6.arcgisonline.com/arcgis/rest/services/Hurricanes/MapServer/",
+L.esri.dynamicMapLayer("http://gisapp1.norfolk.gov/ArcGIS/rest/services/Norfolk_Tide_Gauge_Map/MapServer/",
+      {
+        opacity : .5,
+        layers: [0,1,39]
       });
-  </script>
-</head>
 
-<body>
-  This sample loads an ArcGISDynamicMapServiceLayer and presents check boxes for only the layers that should be toggled on and off by users.
-  <br>
-  <br>Layer List:
-  <span id="layer_list">
-    <!--this is magic -->
-    <input type='checkbox' class='list_item' id='layer0CheckBox' value=1 checked/>Tide Gauges&nbsp;&nbsp;
-    <input type='checkbox' class='list_item' id='layer1CheckBox' value=25 checked/>Flood Water&nbsp;&nbsp;
-  </span>
-  <br>
-  <div id="map" class="claro" style="width:600px; height:400px; border:1px solid #000;"></div>
-</body>
+      map.addLayer(dynLayer);
 
+      //Identifying Dynamic Map Service Features
+      map.on("click", function(e) {
+        dynLayer.identify(e.latlng, function(data) {
+          if(data.results.length > 0) {
+            //Popup text should be in html format.  Showing the Storm Name with the type
+            popupText =  "<b>" + (data.results[0].attributes.EVENTID || data.results[0].attributes.NAME) + "<b>";
+
+            //Add Popup to the map when the mouse was clicked at
+            var popup = L.popup()
+              .setLatLng(e.latlng)
+              .setContent(popupText)
+              .openOn(map);
+          }
+        });
+      });
+      //Slider
+      function updateOpacity(value) {
+      //mapquest.setOpacity(value);
+      console.log(value);
+      map.removeLayer(dynLayer);
+      dynLayer = //L.esri.dynamicMapLayer("http://sampleserver6.arcgisonline.com/arcgis/rest/services/Hurricanes/MapServer/",
+      L.esri.dynamicMapLayer("http://gisapp1.norfolk.gov/ArcGIS/rest/services/Norfolk_Tide_Gauge_Map/MapServer/",
+      {
+        opacity : .5,
+        layers: [0,1,value]
+      });
+
+      map.addLayer(dynLayer);
+
+      $("#size").text(value);
+      }
+      //find me
+      function onLocationFound(e) {
+      var radius = e.accuracy / 2;
+      console.log(e.latlng);
+      L.marker(e.latlng).addTo(map)
+        .bindPopup("You are within " + radius + " meters from this point").openPopup();
+
+      L.circle(e.latlng, radius).addTo(map);
+      }
+
+      function onLocationError(e) {
+      alert(e.message);
+      }
+
+      map.on('locationfound', onLocationFound);
+      map.on('locationerror', onLocationError);
+
+      map.locate({setView: true, maxZoom: 16});
+
+     </script>
+  </body>
 </html>
