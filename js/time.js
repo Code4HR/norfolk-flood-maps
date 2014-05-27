@@ -1,3 +1,4 @@
+
 function getTide(){
 var d = new Date();
    var curr_date = d.getDate();
@@ -24,3 +25,14 @@ $.getJSON( url, function( data ) {
   });
 }
 var time =getTide();
+
+function updateTime(value){
+  var d = new Date();
+  $("timeSlide").val(d.getMinutes()/6);
+  var minutes = value;
+  var hours = Math.floor(minutes/60);
+  $("#time").text(Date.now());
+  console.log(minutes);
+  console.log(hours);
+  console.log(hours + ""+minutes);
+}
