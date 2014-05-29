@@ -18,8 +18,9 @@
 
     <!-- Make the map fill the entire page -->
     <!--Jquery Touch-->
-    <script src="bower_components/jquery/dist/jquery.min.js"</script>
-    <script src="bower_components/leaflet-slider/dist/leaflet.SliderControl.min.js"</script>
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/leaflet-slider/dist/leaflet.SliderControl.min.js"></script>
+    <script src="bower_components/lodash/dist/lodash.compat.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.2/jquery.ui.touch-punch.min.js"></script>
     <script src="js/time.js"></script>
   </head>
@@ -29,9 +30,10 @@
     <center>
       <h2>Depth <!-- &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Time--></h2>
       <label id="size">10 feet</label>
+      <label id="time">Time</label>
       <input id="slide" type="range" min="19" max="39" step="1" value="39" onchange="updateOpacity(this.value)">
-<!--      <label id="time">00:00</label>
-      <input id="otherSlide" type="range" min="0" max="2400" step="30" onchange="updateTime(this.value)"> -->
+<label id="time">00:00</label>
+      <input id="otherSlide" type="range" min="0" max="2400" step="30" onchange="updateTime(this.value)">
     </center>
     <script>
       //Initializing the map to start at the east coast
