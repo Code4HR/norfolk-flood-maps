@@ -11,20 +11,22 @@ var d = new Date();
 console.log(today);
   var url = "http://www.corsproxy.com/tidesandcurrents.noaa.gov/api/datagetter?product=water_level&application=NOS.COOPS.TAC.WL&begin_date="+today+"&end_date="+today+"&datum=MLLW&station=8638610&time_zone=GMT&units=english&format=json";
 $.getJSON( url, function( data ) {
-  // var items = [];
-  // $.each( data, function( key, val ) {
-  //   items.push( "<li id='" + key + "'>" + val + "</li>" );
-  // });
-  //
-  // $( "<ul/>", {
-  //   "class": "my-new-list",
-  //   html: items.join( "" )
-  // }).appendTo( "body" );
-  console.log(data);
-  time=data;
+  var time = [];
+  _.each(data.data, function(data){
+    //round the data
+    time.push(roundHalf(data.v));
+    //push it
+    });
+  console.log(time);
   });
 }
 var time =getTide();
+
+
+function roundHalf(num) {
+    num = Math.round(num*2)/2;
+    return num;
+}
 
 function updateTime(value){
   var d = new Date();
