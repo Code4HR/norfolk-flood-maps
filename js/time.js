@@ -34,7 +34,7 @@ function updateTime(value){
   var minutes = value;
   var hours = Math.floor(minutes/60);
   $("#time").text(Date.now());
-  console.log(minutes);
-  console.log(hours);
-  console.log(hours + ""+minutes);
+  // console.log(minutes);
+  // console.log(hours);
+  // console.log(hours + ""+minutes);
 }
