@@ -31,7 +31,7 @@
       <h2>Depth <!-- &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Time--></h2>
       <label id="size">10 feet</label>
       <label id="time">Time</label>
-      <input id="slide" type="range" min="1" max="20" step="1" value="20" onchange="updateOpacity(this.value)">
+      <input id="slide" type="range" min="1" max="20" step="1" value="20" onchange="updateLayer(this.value)">
 <label id="time">00:00</label>
       <input id="otherSlide" type="range" min="0" max="2400" step="30" onchange="updateTime(this.value)">
     </center>
@@ -69,7 +69,7 @@ L.esri.dynamicMapLayer("http://orfmaps.norfolk.gov/orfgis/rest/services/TITAN/TI
         });
       });
       //Slider
-      function updateOpacity(value) {
+      function updateLayer(value) {
       //mapquest.setOpacity(value);
       console.log(value);
       map.removeLayer(dynLayer);
