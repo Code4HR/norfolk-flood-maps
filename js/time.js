@@ -16,6 +16,7 @@ $.getJSON( url, function( data ) {
     //round the data
     time.push(roundHalf(data.v));
     //push it
+    //add as slider lookup
     });
   console.log(time);
   });
@@ -30,7 +31,7 @@ function roundHalf(num) {
 
 function updateTime(value){
   var d = new Date();
-  $("timeSlide").val(d.getMinutes()/6);
+  $("otherSlide").val(d.getMinutes()/6);
   var minutes = value;
   var hours = Math.floor(minutes/60);
   $("#time").text(Date.now());

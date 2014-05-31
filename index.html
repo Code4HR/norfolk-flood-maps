@@ -38,15 +38,16 @@
     <script>
       //Initializing the map to start at the east coast
       var map = L.map('map').setView([36.86, -76.3], 12);
-      //Add Oceans Basemaps
+      //Add Oceans Basemaps.
       L.esri.basemapLayer("Streets").addTo(map);
 
       //ArcGIS Server Dynamic Map Service, Historic Hurricane Tracks
       dynLayer = //L.esri.dynamicMapLayer("http://sampleserver6.arcgisonline.com/arcgis/rest/services/Hurricanes/MapServer/",
-L.esri.dynamicMapLayer("http://gisapp1.norfolk.gov/ArcGIS/rest/services/Norfolk_Tide_Gauge_Map/MapServer/",
+//L.esri.dynamicMapLayer("http://gisapp1.norfolk.gov/ArcGIS/rest/services/Norfolk_Tide_Gauge_Map/MapServer/",
+L.esri.dynamicMapLayer("http://orfmaps.norfolk.gov/orfgis/rest/services/TITAN/TITAN_FDG_20140528/MapServer/",
       {
         opacity : .5,
-        layers: [0,1,39]
+        layers: [0,1,19]
       });
 
       map.addLayer(dynLayer);
