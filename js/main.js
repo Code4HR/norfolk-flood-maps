@@ -21,8 +21,6 @@ function getTide() {
     });
 }
 
-
-
 function roundHalf(num) {
     num = Math.round(num * 2) / 2;
     return num;
