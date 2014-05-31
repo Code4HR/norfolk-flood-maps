@@ -55,20 +55,22 @@
         map.addLayer(dynLayer);
 
          //Identifying Dynamic Map Service Features
-        map.on("click", function (e) {
-            dynLayer.identify(e.latlng, function (data) {
-                if (data.results.length > 0) {
-                    //Popup text should be in html format.  Showing the Storm Name with the type
-                    popupText = "<b>" + (data.results[0].attributes.EVENTID || data.results[0].attributes.NAME) + "<b>";
+        // map.on("click", function (e) {
+        //     dynLayer.identify(e.latlng, function (data) {
+        //         console.log(data);
+        //         if (data.results.length > 0) {
+        //             //Popup text should be in html format.  Showing the Storm Name with the type
+        //             popupText = "<b>" + (data.results[0].attributes.EVENTID || data.results[0].attributes.NAME) + "<b>";
+        //
+        //             //Add Popup to the map when the mouse was clicked at
+        //             var popup = L.popup()
+        //                 .setLatLng(e.latlng)
+        //                 .setContent(popupText)
+        //                 .openOn(map);
+        //         }
+        //     });
+        // });
 
-                    //Add Popup to the map when the mouse was clicked at
-                    var popup = L.popup()
-                        .setLatLng(e.latlng)
-                        .setContent(popupText)
-                        .openOn(map);
-                }
-            });
-        });
          //Slider
         function updateLayer(value) {
             //mapquest.setOpacity(value);
