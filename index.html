@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <title>Norfolk Flood Map</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
@@ -21,85 +22,89 @@
     <script src="bower_components/lodash/dist/lodash.compat.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.2/jquery.ui.touch-punch.min.js"></script>
     <script src="js/main.js"></script>
-  </head>
-  <body>
-    <div id="map"> </div>
-    <a href="https://github.com/c4hrva/norfolk-flood-maps/"><img style="z-index: 1000; position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png" alt="Fork me on GitHub"></a>
+</head>
+
+<body>
+    <div id="map"></div>
+    <a href="https://github.com/c4hrva/norfolk-flood-maps/">
+        <img style="z-index: 1000; position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png" alt="Fork me on GitHub">
+    </a>
     <center>
-      <h2>Depth <!-- &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Time--></h2>
-      <label id="size">10 feet</label>
-      <label id="time">Time</label>
-      <input id="slide" type="range" min="1" max="20" step="1" value="20" onchange="updateLayer(this.value)">
-<label id="time">00:00</label>
-      <input id="otherSlide" type="range" min="0" max="2400" step="30" onchange="updateTime(this.value)">
+        <h2>Depth <!-- &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Time--></h2>
+        <label id="size">10 feet</label>
+        <label id="time">Time</label>
+        <input id="slide" type="range" min="1" max="20" step="1" value="20" onchange="updateLayer(this.value)">
+        <label id="time">00:00</label>
+        <input id="otherSlide" type="range" min="0" max="2400" step="30" onchange="updateTime(this.value)">
     </center>
     <script>
-      //Initializing the map to start at the east coast
-      var map = L.map('map').setView([36.86, -76.3], 12);
-      //Add Oceans Basemaps.
-      L.esri.basemapLayer("ImageryLabels").addTo(map);
-      L.esri.basemapLayer("Imagery").addTo(map);
+        //Initializing the map to start at the east coast
+        var map = L.map('map').setView([36.86, -76.3], 12);
+         //Add Oceans Basemaps.
+        L.esri.basemapLayer("ImageryLabels").addTo(map);
+        L.esri.basemapLayer("Imagery").addTo(map);
 
-      //ArcGIS Server Dynamic Map Service, Historic Hurricane Tracks
-      dynLayer = //L.esri.dynamicMapLayer("http://sampleserver6.arcgisonline.com/arcgis/rest/services/Hurricanes/MapServer/",
-//L.esri.dynamicMapLayer("http://gisapp1.norfolk.gov/ArcGIS/rest/services/Norfolk_Tide_Gauge_Map/MapServer/",
-L.esri.dynamicMapLayer("http://orfmaps.norfolk.gov/orfgis/rest/services/TITAN/TITAN_FDG_20140528/MapServer/",
-      {
-        opacity : .5,
-        layers: [0,1,20]
-      });
-
-      map.addLayer(dynLayer);
-
-      //Identifying Dynamic Map Service Features
-      map.on("click", function(e) {
-        dynLayer.identify(e.latlng, function(data) {
-          if(data.results.length > 0) {
-            //Popup text should be in html format.  Showing the Storm Name with the type
-            popupText =  "<b>" + (data.results[0].attributes.EVENTID || data.results[0].attributes.NAME) + "<b>";
-
-            //Add Popup to the map when the mouse was clicked at
-            var popup = L.popup()
-              .setLatLng(e.latlng)
-              .setContent(popupText)
-              .openOn(map);
-          }
+         //ArcGIS Server Dynamic Map Service, Historic Hurricane Tracks
+        dynLayer = //L.esri.dynamicMapLayer("http://sampleserver6.arcgisonline.com/arcgis/rest/services/Hurricanes/MapServer/",
+         //L.esri.dynamicMapLayer("http://gisapp1.norfolk.gov/ArcGIS/rest/services/Norfolk_Tide_Gauge_Map/MapServer/",
+        L.esri.dynamicMapLayer("http://orfmaps.norfolk.gov/orfgis/rest/services/TITAN/TITAN_FDG_20140528/MapServer/", {
+            opacity: .5,
+            layers: [0, 1, 20]
         });
-      });
-      //Slider
-      function updateLayer(value) {
-      //mapquest.setOpacity(value);
-      console.log(value);
-      map.removeLayer(dynLayer);
-      dynLayer = L.esri.dynamicMapLayer("http://orfmaps.norfolk.gov/orfgis/rest/services/TITAN/TITAN_FDG_20140528/MapServer/",
-      {
-        opacity : .5,
-        layers: [0,1,value]
-      });
 
-      map.addLayer(dynLayer);
-      console.log(map);
-      $("#size").text((value)/2+" feet");
-      }
-      //find me
-      function onLocationFound(e) {
-      var radius = e.accuracy / 2;
-      console.log(e.latlng);
-      L.marker(e.latlng).addTo(map)
-        .bindPopup("You are within " + radius + " meters from this point").openPopup();
+        map.addLayer(dynLayer);
 
-      L.circle(e.latlng, radius).addTo(map);
-      }
+         //Identifying Dynamic Map Service Features
+        map.on("click", function (e) {
+            dynLayer.identify(e.latlng, function (data) {
+                if (data.results.length > 0) {
+                    //Popup text should be in html format.  Showing the Storm Name with the type
+                    popupText = "<b>" + (data.results[0].attributes.EVENTID || data.results[0].attributes.NAME) + "<b>";
 
-      function onLocationError(e) {
-      alert(e.message);
-      }
+                    //Add Popup to the map when the mouse was clicked at
+                    var popup = L.popup()
+                        .setLatLng(e.latlng)
+                        .setContent(popupText)
+                        .openOn(map);
+                }
+            });
+        });
+         //Slider
+        function updateLayer(value) {
+            //mapquest.setOpacity(value);
+            console.log(value);
+            map.removeLayer(dynLayer);
+            dynLayer = L.esri.dynamicMapLayer("http://orfmaps.norfolk.gov/orfgis/rest/services/TITAN/TITAN_FDG_20140528/MapServer/", {
+                opacity: .5,
+                layers: [0, 1, value]
+            });
 
-      map.on('locationfound', onLocationFound);
-      map.on('locationerror', onLocationError);
+            map.addLayer(dynLayer);
+            console.log(map);
+            $("#size").text((value) / 2 + " feet");
+        }
+         //find me
+        function onLocationFound(e) {
+            var radius = e.accuracy / 2;
+            console.log(e.latlng);
+            L.marker(e.latlng).addTo(map)
+                .bindPopup("You are within " + radius + " meters from this point").openPopup();
 
-      map.locate({setView: true, maxZoom: 16});
+            L.circle(e.latlng, radius).addTo(map);
+        }
 
-     </script>
-  </body>
+        function onLocationError(e) {
+            alert(e.message);
+        }
+
+        map.on('locationfound', onLocationFound);
+        map.on('locationerror', onLocationError);
+
+        map.locate({
+            setView: true,
+            maxZoom: 16
+        });
+    </script>
+</body>
+
 </html>
