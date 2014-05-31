@@ -31,7 +31,7 @@
       <h2>Depth <!-- &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Time--></h2>
       <label id="size">10 feet</label>
       <label id="time">Time</label>
-      <input id="slide" type="range" min="19" max="39" step="1" value="39" onchange="updateOpacity(this.value)">
+      <input id="slide" type="range" min="1" max="20" step="1" value="20" onchange="updateLayer(this.value)">
 <label id="time">00:00</label>
       <input id="otherSlide" type="range" min="0" max="2400" step="30" onchange="updateTime(this.value)">
     </center>
@@ -48,7 +48,7 @@
 L.esri.dynamicMapLayer("http://orfmaps.norfolk.gov/orfgis/rest/services/TITAN/TITAN_FDG_20140528/MapServer/",
       {
         opacity : .5,
-        layers: [0,1,19]
+        layers: [0,1,20]
       });
 
       map.addLayer(dynLayer);
@@ -69,11 +69,11 @@ L.esri.dynamicMapLayer("http://orfmaps.norfolk.gov/orfgis/rest/services/TITAN/TI
         });
       });
       //Slider
-      function updateOpacity(value) {
+      function updateLayer(value) {
       //mapquest.setOpacity(value);
       console.log(value);
       map.removeLayer(dynLayer);
-      dynLayer = L.esri.dynamicMapLayer("http://gisapp1.norfolk.gov/ArcGIS/rest/services/Norfolk_Tide_Gauge_Map/MapServer/",
+      dynLayer = L.esri.dynamicMapLayer("http://orfmaps.norfolk.gov/orfgis/rest/services/TITAN/TITAN_FDG_20140528/MapServer/",
       {
         opacity : .5,
         layers: [0,1,value]
@@ -81,7 +81,7 @@ L.esri.dynamicMapLayer("http://orfmaps.norfolk.gov/orfgis/rest/services/TITAN/TI
 
       map.addLayer(dynLayer);
       console.log(map);
-      $("#size").text((value-19)/2+" feet");
+      $("#size").text((value)/2+" feet");
       }
       //find me
       function onLocationFound(e) {
