@@ -9,7 +9,7 @@ html, body, #map {
 #controls {
     opacity: 0.8;
     background: #fff;
-    width: 200px;
+    width: 300px;
     height: 400px;
     padding: 20px;
     position: absolute;
@@ -20,6 +20,10 @@ html, body, #map {
 
 #controls label {
     display: block;
+}
+
+#controls .tidal_measure {
+    font-weight: bold;
 }
 
 #map {

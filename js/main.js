@@ -1,40 +1,66 @@
-function getTide() {
-    var d = new Date();
-    var curr_date = d.getDate();
-    var curr_month = d.getMonth() + 1; //Months are zero based
-    if (curr_month < 10) {
-        curr_month = "0" + curr_month;
+function getDateString(d) {
+    var day = d.getDate(),
+        month = d.getMonth() + 1, // Months are zero based
+        year = d.getFullYear();
+
+    if (month < 10) {
+        month = "0" + month;
     }
-    var curr_year = d.getFullYear();
-    var today = curr_year + "" + curr_month + "" + curr_date;
-    console.log(today);
-    var url = "http://www.corsproxy.com/tidesandcurrents.noaa.gov/api/datagetter?product=water_level&application=NOS.COOPS.TAC.WL&begin_date=" + today + "&end_date=" + today + "&datum=MLLW&station=8638610&time_zone=GMT&units=english&format=json";
+    return year + "" + month + "" + day;
+}
+
+function getTide() {
+
+    var td = new Date(),
+        yd = new Date(),
+        today = '',
+        yesterday = '';
+
+    yd.setDate(td.getDate() - 1);
+
+    today = getDateString(td);
+    yesterday = getDateString(yd);
+
+    var url = "http://www.corsproxy.com/tidesandcurrents.noaa.gov/api/datagetter?product=water_level&application=NOS.COOPS.TAC.WL&begin_date=" + yesterday + "&end_date=" + today + "&datum=MLLW&station=8638610&time_zone=GMT&units=english&format=json";
+
     $.getJSON(url, function (data) {
-        var time = [];
+        tidalData = [];
         _.each(data.data, function (data) {
-            //round the data
-            time.push(roundHalf(data.v));
-            //push it
-            //add as slider lookup
+            // round data and add to tidalData array.
+            tidalData.push(roundHalf(data.v));
         });
-        console.log(time);
+        updateTidalText(tidalData[tidalData.length - 1]);
     });
 }
 
+function updateTidalText(ft) {
+    $('#tidal_value').text(ft);
+}
+
 function roundHalf(num) {
-    num = Math.round(num * 2) / 2;
-    return num;
+    return Math.round(num * 2) / 2;
 }
 
 function updateTime(value) {
-    var d = new Date();
-    $("time_slider").val(d.getMinutes() / 6);
-    var minutes = value;
-    var hours = Math.floor(minutes / 60);
-    $("#time").text(Date.now());
-    // console.log(minutes);
-    // console.log(hours);
-    // console.log(hours + ""+minutes);
+
+    var ctvIndex = tidalData.length - value,
+        minutesAgo = (240 - value) * 6,
+        hours = 0,
+        minutes = 0;
+
+    if (ctvIndex > 0) {
+        curTidalVal = tidalData[ctvIndex];
+    } else {
+        curTidalVal = "n/a";
+    }
+
+    hours = Math.floor(minutesAgo / 60);
+    minutes = minutesAgo % 60;
+    hPlural = hours == 1 ? '' : 's';
+    mPlural = minutes == 1 ? '' : 's';
+
+    $('#time').text(hours + ' hour' + hPlural + ' and ' + minutes + ' minute' + mPlural + ' ago');
+    $('#tidal_value').text(curTidalVal);
 }
 
 function showControls() {
@@ -106,7 +132,7 @@ function onLocationError(e) {
 var map = null,
     dynLayer = null,
     layerCache = {},
-    time = getTide();
+    tidalData = getTide();
 
 $(function () {
 
