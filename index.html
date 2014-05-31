@@ -72,14 +72,19 @@
         // });
 
          //Slider
+        var layerCache = {};
         function updateLayer(value) {
             //mapquest.setOpacity(value);
             console.log(value);
             map.removeLayer(dynLayer);
-            dynLayer = L.esri.dynamicMapLayer("http://orfmaps.norfolk.gov/orfgis/rest/services/TITAN/TITAN_FDG_20140528/MapServer/", {
-                opacity: .5,
-                layers: [0, 1, value]
-            });
+
+            if (!layerCache[value]) {
+                layerCache[value] = L.esri.dynamicMapLayer("http://orfmaps.norfolk.gov/orfgis/rest/services/TITAN/TITAN_FDG_20140528/MapServer/", {
+                    opacity: .5,
+                    layers: [0, 1, value]
+                });
+            }
+            dynLayer = layerCache[value];
 
             map.addLayer(dynLayer);
             console.log(map);
