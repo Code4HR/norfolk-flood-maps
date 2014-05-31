@@ -20,7 +20,7 @@ function getTide() {
         console.log(time);
     });
 }
-var time = getTide();
+
 
 
 function roundHalf(num) {
@@ -50,3 +50,80 @@ function showControls() {
         c.className = "control-container";
     }
 }
+
+//Identifying Dynamic Map Service Features
+// map.on("click", function (e) {
+//     dynLayer.identify(e.latlng, function (data) {
+//         console.log(data);
+//         if (data.results.length > 0) {
+//             //Popup text should be in html format.  Showing the Storm Name with the type
+//             popupText = "<b>" + (data.results[0].attributes.EVENTID || data.results[0].attributes.NAME) + "<b>";
+//
+//             //Add Popup to the map when the mouse was clicked at
+//             var popup = L.popup()
+//                 .setLatLng(e.latlng)
+//                 .setContent(popupText)
+//                 .openOn(map);
+//         }
+//     });
+// });
+
+ //Slider
+function updateLayer(value) {
+    //mapquest.setOpacity(value);
+    console.log(value);
+
+    // if there's a current layer, remove it.
+    if (dynLayer) {
+        map.removeLayer(dynLayer);
+    }
+
+    if (!layerCache[value]) {
+        layerCache[value] = L.esri.dynamicMapLayer("http://orfmaps.norfolk.gov/orfgis/rest/services/TITAN/TITAN_FDG_20140528/MapServer/", {
+            opacity: 0.5,
+            layers: [0, 1, value]
+        });
+    }
+    dynLayer = layerCache[value];
+
+    map.addLayer(dynLayer);
+    console.log(map);
+    $("#size").text((value) / 2 + " feet");
+}
+
+ //find me
+function onLocationFound(e) {
+    var radius = e.accuracy / 2;
+    console.log(e.latlng);
+    L.marker(e.latlng).addTo(map)
+        .bindPopup("You are within " + radius + " meters from this point").openPopup();
+
+    L.circle(e.latlng, radius).addTo(map);
+}
+
+function onLocationError(e) {
+    alert(e.message);
+}
+
+var map = null,
+    dynLayer = null,
+    layerCache = {},
+    time = getTide();
+
+$(function () {
+
+    map = L.map('map').setView([36.86, -76.3], 12);
+
+    //Add Oceans Basemaps.
+    L.esri.basemapLayer("ImageryLabels").addTo(map);
+    L.esri.basemapLayer("Imagery").addTo(map);
+
+    map.on('locationfound', onLocationFound);
+    map.on('locationerror', onLocationError);
+    map.locate({
+        setView: true,
+        maxZoom: 16
+    });
+
+    updateLayer(20);
+});
