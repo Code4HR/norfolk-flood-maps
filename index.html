@@ -44,22 +44,15 @@
 
     <script>
         //Initializing the map to start at the east coast
-        var map = L.map('map').setView([36.86, -76.3], 12);
+        var map = L.map('map').setView([36.86, -76.3], 12),
+            dynLayer = null,
+            layerCache = {};
+
          //Add Oceans Basemaps.
         L.esri.basemapLayer("ImageryLabels").addTo(map);
         L.esri.basemapLayer("Imagery").addTo(map);
 
-         //ArcGIS Server Dynamic Map Service, Historic Hurricane Tracks
-        dynLayer = //L.esri.dynamicMapLayer("http://sampleserver6.arcgisonline.com/arcgis/rest/services/Hurricanes/MapServer/",
-         //L.esri.dynamicMapLayer("http://gisapp1.norfolk.gov/ArcGIS/rest/services/Norfolk_Tide_Gauge_Map/MapServer/",
-        L.esri.dynamicMapLayer("http://orfmaps.norfolk.gov/orfgis/rest/services/TITAN/TITAN_FDG_20140528/MapServer/", {
-            opacity: .5,
-            layers: [0, 1, 20]
-        });
-
-        map.addLayer(dynLayer);
-
-         //Identifying Dynamic Map Service Features
+        //Identifying Dynamic Map Service Features
         // map.on("click", function (e) {
         //     dynLayer.identify(e.latlng, function (data) {
         //         console.log(data);
@@ -77,11 +70,14 @@
         // });
 
          //Slider
-        var layerCache = {};
         function updateLayer(value) {
             //mapquest.setOpacity(value);
             console.log(value);
-            map.removeLayer(dynLayer);
+
+            // if there's a current layer, remove it.
+            if (dynLayer) {
+                map.removeLayer(dynLayer);
+            }
 
             if (!layerCache[value]) {
                 layerCache[value] = L.esri.dynamicMapLayer("http://orfmaps.norfolk.gov/orfgis/rest/services/TITAN/TITAN_FDG_20140528/MapServer/", {
@@ -95,6 +91,7 @@
             console.log(map);
             $("#size").text((value) / 2 + " feet");
         }
+
          //find me
         function onLocationFound(e) {
             var radius = e.accuracy / 2;
@@ -115,6 +112,10 @@
         map.locate({
             setView: true,
             maxZoom: 16
+        });
+
+        $(function () {
+            updateLayer(20);
         });
     </script>
 </body>
