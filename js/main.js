@@ -28,7 +28,7 @@ function roundHalf(num) {
 
 function updateTime(value) {
     var d = new Date();
-    $("otherSlide").val(d.getMinutes() / 6);
+    $("time_slider").val(d.getMinutes() / 6);
     var minutes = value;
     var hours = Math.floor(minutes / 60);
     $("#time").text(Date.now());
@@ -124,4 +124,12 @@ $(function () {
     });
 
     updateLayer(20);
+
+    $('#depth_slider').on('change', function () {
+        updateLayer($(this).val());
+    });
+
+    $('#time_slider').on('change', function () {
+        updateTime($(this).val());
+    });
 });
