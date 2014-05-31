@@ -18,6 +18,10 @@ html, body, #map {
     z-index: 100;
 }
 
+#controls label {
+    display: block;
+}
+
 #map {
   z-index: 1;
 }
