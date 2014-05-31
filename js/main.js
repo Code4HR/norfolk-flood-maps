@@ -140,7 +140,7 @@ $(function () {
 
     //Add Oceans Basemaps.
     L.esri.basemapLayer("ImageryLabels").addTo(map);
-    L.esri.basemapLayer("Imagery").addTo(map);
+    L.esri.basemapLayer("Gray").addTo(map);
 
     map.on('locationfound', onLocationFound);
     map.on('locationerror', onLocationError);
