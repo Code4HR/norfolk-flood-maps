@@ -55,8 +55,11 @@ http://bit.ly/1mhIR2B
 
 Dependencies
 ---
-git submodule update--init (ESRI leaflet)
-
+```
+git clone git@github.com:c4hrva/norfolk-flood-maps
+cd norfolk-flood-maps
+git submodule update --init   #(ESRI leaflet)
+```
 APIs
 ---
 ArcGis JS - https://developers.arcgis.com/javascript/jshelp/whats_new.html
