@@ -9,7 +9,6 @@ ArcGIS 10.0
 http://gisapp1.norfolk.gov/ArcGIS/rest/services
 http://giswebapp1/ArcGIS/rest/services/Norfolk_Tide_Gauge_Map/MapServer
 
-
 These maps are precalculated from collected city data over a three year span.
 
 some information on layers
@@ -54,6 +53,13 @@ find the different maps
 Tide Gauge Map
 http://bit.ly/1mhIR2B
 
+Dependencies
+---
+```
+git clone git@github.com:c4hrva/norfolk-flood-maps
+cd norfolk-flood-maps
+git submodule update --init   #(ESRI leaflet)
+```
 APIs
 ---
 ArcGis JS - https://developers.arcgis.com/javascript/jshelp/whats_new.html
