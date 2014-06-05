@@ -10,7 +10,7 @@ function getDateString(d) {
     if (day < 10) {
         day = "0" + day;
     }
-    
+
     return year + "" + month + "" + day;
 }
 
@@ -154,6 +154,24 @@ $(function () {
     //     setView: true,
     //     maxZoom: 16
     // });
+
+    // create the geocoding control and add it to the map
+    var searchControl = new L.esri.Controls.Geosearch().addTo(map);
+
+    // create an empty layer group to store the results and add it to the map
+    var results = new L.LayerGroup().addTo(map);
+
+    // listen for the results event and add every result to the map
+    searchControl.on("results", function(data){
+      results.clearLayers();
+      for (var i = data.results.length - 1; i >= 0; i--) {
+        results.addLayer(L.marker(data.results[i].latlng));
+      }
+    });
+
+    searchControl.on("error", function(e){
+      console.log(e);
+    });
 
     updateLayer(20);
 
