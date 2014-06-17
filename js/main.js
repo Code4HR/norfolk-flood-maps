@@ -154,7 +154,11 @@ $(function () {
     // });
 
     // create the geocoding control and add it to the map
-    var searchControl = new L.esri.Controls.Geosearch().addTo(map);
+    var options = {
+      position: "topleft",
+      expanded: true
+    };
+    var searchControl = new L.esri.Controls.Geosearch(options).addTo(map);
 
     // create an empty layer group to store the results and add it to the map
     var results = new L.LayerGroup().addTo(map);
