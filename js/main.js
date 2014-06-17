@@ -25,8 +25,7 @@ function getTide() {
 
     today = getDateString(td);
     yesterday = getDateString(yd);
-
-    var url = "http://www.corsproxy.com/tidesandcurrents.noaa.gov/api/datagetter?product=water_level&application=NOS.COOPS.TAC.WL&begin_date=" + yesterday + "&end_date=" + today + "&datum=MLLW&station=8638610&time_zone=GMT&units=english&format=json";
+    var url = "http://www.corsproxy.com/tidesandcurrents.noaa.gov/api/datagetter?product=water_level&application=NOS.COOPS.TAC.WL&begin_date=" + yesterday + "&end_date=" + today + "&datum=NAVD&station=8638610&time_zone=lst_ldt&units=english&format=json";
 
     $.getJSON(url, function (data) {
         tidalData = [];
