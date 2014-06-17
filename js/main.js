@@ -143,9 +143,8 @@ $(function () {
     map = L.map('map').setView([36.86, -76.3], 12);
 
     //Add Oceans Basemaps.
-    L.esri.basemapLayer("ImageryLabels").addTo(map);
-    L.esri.basemapLayer("Gray").addTo(map);
     L.esri.basemapLayer("Streets").addTo(map);
+    L.esri.basemapLayer("ImageryLabels").addTo(map);
 
     map.on('locationfound', onLocationFound);
     map.on('locationerror', onLocationError);
