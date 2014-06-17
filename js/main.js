@@ -108,7 +108,7 @@ function updateLayer(value) {
 
     if (!layerCache[value]) {
         layerCache[value] = L.esri.dynamicMapLayer("http://orfmaps.norfolk.gov/orfgis/rest/services/TITAN/TITAN_FDG_20140528/MapServer/", {
-            opacity: 0.5,
+            opacity: 0.4,
             layers: [0, 1, value]
         });
     }
